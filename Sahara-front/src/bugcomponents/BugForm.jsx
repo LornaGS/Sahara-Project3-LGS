@@ -5,12 +5,6 @@ const BugForm = ({
   onCancel,
   isUpdateMode = false
 }) => {
-  
-  const handleDateChange = (e) => {
-    let value = e.target.value;
-    console.log('Date reported changed to:', value);
-    onChange({ ...formData, dateReported: value });
-  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -45,9 +39,8 @@ const BugForm = ({
 
       <div className="form-group">
         <label className="label1" htmlFor="input1">Priority:</label>
-        <input
+        <select
           className="input1"
-          type="text"
           name="priority"
           value={formData.priority || ''}  
           onChange={(e) => {
@@ -55,23 +48,33 @@ const BugForm = ({
             onChange({ ...formData, priority: e.target.value });
           }}
           required
-        />
+        >
+          <option value="">Select Priority</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
       </div>
 
       <div className="form-group">
-        <label className="label1" htmlFor="input1">Status:</label>
-        <input
-          className="input1"
-          type="text"
-          name="status"
-          value={formData.status || ''} 
-          onChange={(e) => {
-            console.log('Status changed to:', e.target.value); 
-            onChange({ ...formData, status: e.target.value });
-          }}
-          required
-        />
-      </div>
+  <label className="label1" htmlFor="input1">Status:</label>
+  <select
+    className="input1"
+    name="status"
+    value={formData.status || ''} 
+    onChange={(e) => {
+      console.log('Status changed to:', e.target.value); 
+      onChange({ ...formData, status: e.target.value });
+    }}
+    required
+  >
+    <option value="">Select Status</option>
+    <option value="Open">Open</option>
+    <option value="On Hold">On Hold</option>
+    <option value="Closed">Closed</option>
+  </select>
+</div>
+
 
       <div className="form-group">
         <label className="label1" htmlFor="input1">Assignee:</label>

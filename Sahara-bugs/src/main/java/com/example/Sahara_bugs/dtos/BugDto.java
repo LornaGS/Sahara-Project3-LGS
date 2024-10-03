@@ -6,7 +6,7 @@ public class BugDto {
     private Integer id;
     private String title;
     private String description;
-    private String severity;
+    private String priority;
     private String status;
     private String reporter;
     private String assignee;
@@ -16,18 +16,18 @@ public class BugDto {
     public BugDto() {}
 
 
-    public BugDto(Integer id, String title, String description, String severity, String status, String reporter, String assignee, LocalDateTime dateReported) {
+    public BugDto(Integer id, String title, String description, String priority, String status, String reporter, String assignee, LocalDateTime dateReported) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.severity = severity;
+        this.priority = priority;
         this.status = status;
         this.reporter = reporter;
         this.assignee = assignee;
-        this.dateReported = dateReported;  
+        this.dateReported = dateReported;
     }
 
-    // Getters and setters
+
     public Integer getId() {
         return id;
     }
@@ -52,12 +52,12 @@ public class BugDto {
         this.description = description;
     }
 
-    public String getSeverity() {
-        return severity;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setSeverity(String severity) {
-        this.severity = severity;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public String getStatus() {

@@ -15,31 +15,31 @@ public class Bug {
     private Integer id;
     private String title;
     private String description;
-    private String severity; // e.g., LOW, MEDIUM, HIGH
-    private String status;   // e.g., OPEN, IN_PROGRESS, CLOSED
-    private String reporter; // e.g., name of the person who reported
-    private String assignee; // e.g., name of the person assigned to fix the bug
+    private String priority;
+    private String status;
+    private String reporter;
+    private String assignee;
 
-    @Column(nullable = false, updatable = false)  // Ensure it is not null and can't be updated
-    private LocalDateTime dateReported;  // Added field for date and time of bug reporting
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dateReported;
 
-    // Default constructor
+
     public Bug() {
-        this.dateReported = LocalDateTime.now();  // Automatically set date when bug is created
+        this.dateReported = LocalDateTime.now();
     }
 
-    // Constructor for creating a new Bug
-    public Bug(String title, String description, String severity, String status, String reporter, String assignee) {
+
+    public Bug(String title, String description, String priority, String status, String reporter, String assignee) {
         this.title = title;
         this.description = description;
-        this.severity = severity;
+        this.priority = priority;
         this.status = status;
         this.reporter = reporter;
         this.assignee = assignee;
         this.dateReported = LocalDateTime.now();  // Set dateReported during bug creation
     }
 
-    // Getters and setters
+
     public Integer getId() {
         return id;
     }
@@ -64,12 +64,12 @@ public class Bug {
         this.description = description;
     }
 
-    public String getSeverity() {
-        return severity;
+    public String getPriority() {
+        return priority;
     }
 
-    public void setSeverity(String severity) {
-        this.severity = severity;
+    public void setPriority(String priority) {
+        this.priority = priority;
     }
 
     public String getStatus() {

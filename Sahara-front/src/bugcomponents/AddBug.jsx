@@ -36,7 +36,9 @@ const AddBug = ({ onAddBug }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
+    console.log("Form Data to be Submitted:", formData);
+
+    // Validate form data
     if (
       !formData.title ||
       !formData.description ||
@@ -63,21 +65,25 @@ const AddBug = ({ onAddBug }) => {
     }
 
     try {
+      console.log("Sending POST request with data:", formData);
+
       const postResponse = await axios.post("http://localhost:8085/bug/add", {
         title: formData.title,
         description: formData.description,
-        severity: formData.priority,
+        priority: formData.priority,
         status: formData.status,
         assignee: formData.assignee,
         reporter: formData.reporter,
-        
       });
 
       const data = postResponse.data;
 
+      console.log("Post Response:", data);
+
       setAlertMessage(`New Bug Reported. Your Unique ID is ${data.id}`);
       setShowAlert(true);
 
+      // Clear form
       setFormData({
         title: "",
         description: "",
@@ -86,6 +92,7 @@ const AddBug = ({ onAddBug }) => {
         assignee: "",
         reporter: "",
       });
+      
       onAddBug();  
       setIsModalOpen(false);  
     } catch (error) {
@@ -127,7 +134,6 @@ const AddBug = ({ onAddBug }) => {
     </div>
   );
 };
-
 
 AddBug.propTypes = {
   onAddBug: PropTypes.func.isRequired,

@@ -19,23 +19,23 @@ public class BugService {
     @Autowired
     private BugRepo bugRepo;
 
-    // Utility method to convert Entity to DTO
-    private BugDto convertToDTO(Bug bug) {  // Corrected to BugDto
+
+    private BugDto convertToDTO(Bug bug) {
         return new BugDto(
                 bug.getId(),
                 bug.getTitle(),
                 bug.getDescription(),
-                bug.getSeverity(),
+                bug.getPriority(),
                 bug.getStatus(),
                 bug.getReporter(),
                 bug.getAssignee(),
-                bug.getDateReported()  // Include the dateReported in the DTO conversion
+                bug.getDateReported()
         );
     }
 
-    // CREATE
+
     public ResponseEntity<BugDto> addBug(Bug newBug) {
-        // Ensure dateReported is set when creating the bug (this should be done automatically in the entity)
+
         if (newBug.getDateReported() == null) {
             newBug.setDateReported(LocalDateTime.now());
         }
@@ -43,7 +43,7 @@ public class BugService {
         return new ResponseEntity<>(convertToDTO(created), HttpStatus.CREATED);
     }
 
-    // READ
+
     public List<BugDto> getAllBugs() {
         return bugRepo.findAll().stream()
                 .map(this::convertToDTO)
@@ -58,7 +58,7 @@ public class BugService {
         return ResponseEntity.ok(convertToDTO(found.get()));
     }
 
-    // UPDATE
+
     public ResponseEntity<BugDto> updateBug(Integer id, Bug bugUpdate) {
         Optional<Bug> found = bugRepo.findById(id);
         if (found.isEmpty()) {
@@ -68,17 +68,17 @@ public class BugService {
         Bug toUpdate = found.get();
         toUpdate.setTitle(bugUpdate.getTitle());
         toUpdate.setDescription(bugUpdate.getDescription());
-        toUpdate.setSeverity(bugUpdate.getSeverity());
+        toUpdate.setPriority(bugUpdate.getPriority());
         toUpdate.setStatus(bugUpdate.getStatus());
         toUpdate.setReporter(bugUpdate.getReporter());
         toUpdate.setAssignee(bugUpdate.getAssignee());
 
-        // Ensure the dateReported remains unchanged
+
         Bug updated = bugRepo.save(toUpdate);
         return ResponseEntity.ok(convertToDTO(updated));
     }
 
-    // DELETE
+
     public ResponseEntity<?> deleteBug(Integer id) {
         Optional<Bug> found = bugRepo.findById(id);
         if (found.isEmpty()) {

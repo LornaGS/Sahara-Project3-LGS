@@ -12,7 +12,7 @@ const UpdateBug = ({ bug, onCancel, onUpdateSuccess }) => {
     id: '',
     title: '',
     description: '',
-    severity: '',
+    priority: '',
     status: '',
     reporter: '',
     assignee: ''
@@ -30,7 +30,7 @@ const UpdateBug = ({ bug, onCancel, onUpdateSuccess }) => {
         id: bug.id,
         title: bug.title || '',
         description: bug.description || '',
-        severity: bug.severity || '',
+        priority: bug.priority || '',
         status: bug.status || '',
         reporter: bug.reporter || '',
         assignee: bug.assignee || ''
@@ -57,7 +57,7 @@ const UpdateBug = ({ bug, onCancel, onUpdateSuccess }) => {
       const response = await axios.patch(`http://localhost:8085/bug/update/${formData.id}`, {
         title: formData.title,
         description: formData.description,
-        severity: formData.severity,
+        priority: formData.priority,
         status: formData.status,
         reporter: formData.reporter,
         assignee: formData.assignee,

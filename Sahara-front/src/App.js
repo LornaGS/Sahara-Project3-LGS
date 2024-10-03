@@ -7,6 +7,7 @@ import ShopPage from './navbarcomponents/ShopPage';
 import Admin from './navbarcomponents/Admin';
 import { CartProvider } from './cartcomponents/CartContext';
 import { ItemProvider } from './shopcomponents/ItemContext';
+import BugPage from './navbarcomponents/BugPage';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/shop" element={<ShopPage />} />
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin" element={<Admin />} />     
+              <Route path="/bug" element={<BugPage />} />          
             </Routes>
           </ItemProvider>
         </CartProvider>

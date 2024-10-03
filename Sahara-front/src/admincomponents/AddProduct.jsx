@@ -10,7 +10,7 @@ import useFetchItems from "./FetchItems";
 Modal.setAppElement("#root");
 
 /**
- * AddProduct component allows the user to add a new product.
+ * AddProduct component allows the user to add a new product..
  *
  
  */

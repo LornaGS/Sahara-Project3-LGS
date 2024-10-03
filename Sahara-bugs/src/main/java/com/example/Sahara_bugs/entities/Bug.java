@@ -1,52 +1,45 @@
-package com.legacy.demo.entities;
-
-import java.util.ArrayList;
+package com.example.Sahara_bugs.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import java.time.LocalDateTime;
 
 @Entity
-public class Item {
+public class Bug {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
-    private String name;
-    private Double price;
-    private Integer quantity;
-    private String imageUrl;
-    private String color;
-    private String category;
-    private ArrayList<String> tags;
+    private String title;
+    private String description;
+    private String severity; // e.g., LOW, MEDIUM, HIGH
+    private String status;   // e.g., OPEN, IN_PROGRESS, CLOSED
+    private String reporter; // e.g., name of the person who reported
+    private String assignee; // e.g., name of the person assigned to fix the bug
 
-    public Item(){
+    @Column(nullable = false, updatable = false)  // Ensure it is not null and can't be updated
+    private LocalDateTime dateReported;  // Added field for date and time of bug reporting
+
+    // Default constructor
+    public Bug() {
+        this.dateReported = LocalDateTime.now();  // Automatically set date when bug is created
     }
 
-    public Item(Integer id, String name, Double price, Integer quantity, String imageUrl, String color, String category, ArrayList<String> tags) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.imageUrl = imageUrl;
-        this.color = color;
-        this.category = category;
-        this.tags = tags;
+    // Constructor for creating a new Bug
+    public Bug(String title, String description, String severity, String status, String reporter, String assignee) {
+        this.title = title;
+        this.description = description;
+        this.severity = severity;
+        this.status = status;
+        this.reporter = reporter;
+        this.assignee = assignee;
+        this.dateReported = LocalDateTime.now();  // Set dateReported during bug creation
     }
 
-
-    public Item(String name, Double price, String imageUrl) {
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
-
-    public Item(Integer id) {
-        this.id = id;
-    }
-
-
+    // Getters and setters
     public Integer getId() {
         return id;
     }
@@ -55,59 +48,59 @@ public class Item {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public String getSeverity() {
+        return severity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setSeverity(String severity) {
+        this.severity = severity;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getStatus() {
+        return status;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getColor() {
-        return color;
+    public String getReporter() {
+        return reporter;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setReporter(String reporter) {
+        this.reporter = reporter;
     }
 
-    public String getCategory() {
-        return category;
+    public String getAssignee() {
+        return assignee;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
+    public LocalDateTime getDateReported() {
+        return dateReported;
     }
 
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
+    public void setDateReported(LocalDateTime dateReported) {
+        this.dateReported = dateReported;
     }
 }

@@ -1,14 +1,14 @@
-package com.legacy.demo.services;
+package com.example.Sahara_bugs.services;
 
+import com.example.Sahara_bugs.entities.Bug;
+import com.example.Sahara_bugs.dtos.BugDto;  // Corrected to BugDto (uppercase B)
+import com.example.Sahara_bugs.repos.BugRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.legacy.demo.dto.BugDTO;
-import com.legacy.demo.entities.Bug;
-import com.legacy.demo.repos.BugRepo;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,32 +20,37 @@ public class BugService {
     private BugRepo bugRepo;
 
     // Utility method to convert Entity to DTO
-    private BugDTO convertToDTO(Bug bug) {
-        return new BugDTO(
+    private BugDto convertToDTO(Bug bug) {  // Corrected to BugDto
+        return new BugDto(
                 bug.getId(),
                 bug.getTitle(),
                 bug.getDescription(),
                 bug.getSeverity(),
                 bug.getStatus(),
                 bug.getReporter(),
-                bug.getAssignee()
+                bug.getAssignee(),
+                bug.getDateReported()  // Include the dateReported in the DTO conversion
         );
     }
 
     // CREATE
-    public ResponseEntity<BugDTO> addBug(Bug newBug) {
+    public ResponseEntity<BugDto> addBug(Bug newBug) {
+        // Ensure dateReported is set when creating the bug (this should be done automatically in the entity)
+        if (newBug.getDateReported() == null) {
+            newBug.setDateReported(LocalDateTime.now());
+        }
         Bug created = bugRepo.save(newBug);
         return new ResponseEntity<>(convertToDTO(created), HttpStatus.CREATED);
     }
 
     // READ
-    public List<BugDTO> getAllBugs() {
+    public List<BugDto> getAllBugs() {
         return bugRepo.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<BugDTO> getBug(Integer id) {
+    public ResponseEntity<BugDto> getBug(Integer id) {
         Optional<Bug> found = bugRepo.findById(id);
         if (found.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -54,7 +59,7 @@ public class BugService {
     }
 
     // UPDATE
-    public ResponseEntity<BugDTO> updateBug(Integer id, Bug bugUpdate) {
+    public ResponseEntity<BugDto> updateBug(Integer id, Bug bugUpdate) {
         Optional<Bug> found = bugRepo.findById(id);
         if (found.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -68,6 +73,7 @@ public class BugService {
         toUpdate.setReporter(bugUpdate.getReporter());
         toUpdate.setAssignee(bugUpdate.getAssignee());
 
+        // Ensure the dateReported remains unchanged
         Bug updated = bugRepo.save(toUpdate);
         return ResponseEntity.ok(convertToDTO(updated));
     }

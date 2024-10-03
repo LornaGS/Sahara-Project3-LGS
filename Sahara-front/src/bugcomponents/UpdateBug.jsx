@@ -21,10 +21,7 @@ const UpdateBug = ({ bug, onCancel, onUpdateSuccess }) => {
   const [alertMessage, setAlertMessage] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-
   useEffect(() => {
-    console.log("Bug prop received:", bug);  
-
     if (bug && bug.id) {
       setFormData({
         id: bug.id,
@@ -44,10 +41,8 @@ const UpdateBug = ({ bug, onCancel, onUpdateSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data ID:", formData.id);
 
     if (!formData.id) {
-      console.error("Form Data ID is missing. Cannot update bug.");
       setAlertMessage('Failed to update bug due to missing ID.');
       setShowAlert(true);
       return;
@@ -67,7 +62,7 @@ const UpdateBug = ({ bug, onCancel, onUpdateSuccess }) => {
         setAlertMessage('Bug successfully updated.');
         setShowAlert(true);
         setIsModalVisible(false);
-        onUpdateSuccess(formData); 
+        onUpdateSuccess(formData);  // Trigger parent update after successful update
       } else {
         setAlertMessage('Failed to update bug.');
         setShowAlert(true);

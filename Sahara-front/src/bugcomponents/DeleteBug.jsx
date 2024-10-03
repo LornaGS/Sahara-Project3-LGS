@@ -22,6 +22,7 @@ const DeleteBug = ({ bugIdToDelete, onCancel, onConfirm }) => {
             const response = await axios.delete(`${API_URL}${bugIdToDelete}`);
             if (response.status === 200) {
                 setAlertMessage(`Bug with ID ${bugIdToDelete} successfully deleted.`);
+                onConfirm();  // Trigger the refresh in the parent
             } else {
                 setAlertMessage(`Failed to delete the bug with ID ${bugIdToDelete}.`);
             }
@@ -35,7 +36,7 @@ const DeleteBug = ({ bugIdToDelete, onCancel, onConfirm }) => {
 
     const handleAlertClose = () => {
         setShowAlert(false);
-        onConfirm(); 
+        onCancel();  // Close the modal when alert is closed
     };
 
     return (

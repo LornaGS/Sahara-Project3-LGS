@@ -1,26 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import useFetchBugs from './FetchBugs';
+import UpdateBug from './UpdateBug'; 
 
-const BugListTable = ({ onUpdate, onDelete }) => {
+const BugListTable = ({ onDelete }) => {
   const { items: bugs, error, refetch } = useFetchBugs();
-  const [shouldRefetch, setShouldRefetch] = useState(false); 
-
- 
-  useEffect(() => {
-    if (shouldRefetch) {
-      refetch(); 
-      setShouldRefetch(false);  
-    }
-  }, [shouldRefetch, refetch]);
+  const [bugToUpdate, setBugToUpdate] = useState(null); 
 
   const handleUpdate = (bug) => {
-    onUpdate(bug);  
-    setShouldRefetch(true); 
+    setBugToUpdate(bug);  
   };
 
-  const handleDelete = (bugId) => {
-    onDelete(bugId);  
-    setShouldRefetch(true);  
+  const handleDelete = async (bugId) => {
+   
+    await onDelete(bugId);
+    refetch(); 
+  };
+
+  const handleUpdateSuccess = (updatedBug) => {
+    refetch();  
+    setBugToUpdate(null);  
   };
 
   if (error) {
@@ -56,7 +54,7 @@ const BugListTable = ({ onUpdate, onDelete }) => {
                 <td>{bug.priority}</td>
                 <td>{bug.status}</td>
                 <td>{bug.assignee}</td>
-                <td>{bug.dateReported}</td>
+                <td>{new Date(bug.dateReported).toLocaleDateString('en-GB')}</td>
                 <td>{bug.reporter}</td>
                 <td>
                   <button onClick={() => handleUpdate(bug)}>Update Bug</button>
@@ -68,6 +66,13 @@ const BugListTable = ({ onUpdate, onDelete }) => {
             ))}
           </tbody>
         </table>
+      )}
+
+      {bugToUpdate && (
+        <UpdateBug
+          bug={bugToUpdate}
+          onCancel={() => setBugToUpdate(null)}
+        />
       )}
     </div>
   );

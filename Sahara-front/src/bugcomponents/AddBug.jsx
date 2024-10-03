@@ -38,7 +38,7 @@ const AddBug = ({ onAddBug }) => {
 
     console.log("Form Data to be Submitted:", formData);
 
-    // Validate form data
+ 
     if (
       !formData.title ||
       !formData.description ||
@@ -83,7 +83,7 @@ const AddBug = ({ onAddBug }) => {
       setAlertMessage(`New Bug Reported. Your Unique ID is ${data.id}`);
       setShowAlert(true);
 
-      // Clear form
+  
       setFormData({
         title: "",
         description: "",

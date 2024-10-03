@@ -55,7 +55,7 @@ pipeline {
             }
         }
 
- stage('Test Backend - Sahara-cart') {
+       stage('Test Backend - Sahara-cart') {
             steps {
                 dir('Sahara-cart') {
                     bat 'mvn test'
@@ -86,6 +86,17 @@ pipeline {
             }
         }
 
+
+
+        stage('Test Frontend') {
+            steps {
+                dir('Sahara-front') {
+                    bat 'npm test -- --watchAll=false'
+                }
+            }
+        }
+
+
         stage('Run Frontend') {
             steps {
                 dir('Sahara-front') {
@@ -100,7 +111,7 @@ pipeline {
             echo 'Pipeline execution complete'
         }
         success {
-            echo 'Build and deployment successful!'
+            echo 'Build, test and deployment successful!'
         }
         failure {
             echo 'Build or deployment failed.'

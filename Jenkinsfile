@@ -102,6 +102,14 @@ pipeline {
 
         stage('Run Services with Docker') {
             steps {
+                script {
+            env.BACK_DB_URL = credentials('back_url')
+            env.BACK_DB_USERNAME = credentials('back_user')
+            env.BACK_DB_PASSWORD = credentials('back_password')
+            env.CART_DB_URL = credentials('cart_url')
+            env.CART_DB_USERNAME = credentials('cart_user')
+            env.CART_DB_PASSWORD = credentials('cart_password')
+        }
                 bat 'docker-compose -f docker-compose.yml up -d'
             }
         }

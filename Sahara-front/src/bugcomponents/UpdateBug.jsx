@@ -62,7 +62,7 @@ const UpdateBug = ({ bug, onCancel, onUpdateSuccess }) => {
         setAlertMessage('Bug successfully updated.');
         setShowAlert(true);
         setIsModalVisible(false);
-        onUpdateSuccess(formData);  // Trigger parent update after successful update
+        onUpdateSuccess(formData);  
       } else {
         setAlertMessage('Failed to update bug.');
         setShowAlert(true);

@@ -11,7 +11,6 @@ const BugListTable = ({ onDelete }) => {
   };
 
   const handleDelete = async (bugId) => {
-   
     await onDelete(bugId);
     refetch(); 
   };
@@ -72,6 +71,7 @@ const BugListTable = ({ onDelete }) => {
         <UpdateBug
           bug={bugToUpdate}
           onCancel={() => setBugToUpdate(null)}
+          onUpdateSuccess={handleUpdateSuccess}  
         />
       )}
     </div>

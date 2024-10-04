@@ -118,8 +118,8 @@ pipeline {
             steps {
                 echo 'Deploying to Production...'
                 // Add your deployment steps here, for example:
-                bat 'scp target/your-app.jar user@192.168.0.78:/path/to/deploy'
-                bat 'ssh user@192.168.0.78 "cd /path/to/deploy && ./restart.sh"'
+                // bat 'scp target/your-app.jar user@192.168.0.78:/path/to/deploy'
+                // bat 'ssh user@192.168.0.78 "cd /path/to/deploy && ./restart.sh"'
             }
         }
     }

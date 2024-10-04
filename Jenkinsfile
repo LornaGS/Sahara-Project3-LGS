@@ -93,6 +93,18 @@ pipeline {
                 }
             }
         }
+
+        tage('Build Docker Images') {
+            steps {
+                sh 'docker-compose -f docker-compose.yml build'
+            }
+        }
+
+        stage('Run Services with Docker') {
+            steps {
+                sh 'docker-compose -f docker-compose.yml up -d'
+            }
+        }
     }
 
     post {

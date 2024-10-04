@@ -1,0 +1,33 @@
+version: '3'
+services:
+  sahara-front:
+    build: ./Sahara-front
+    ports:
+      - "3000:3000"
+    networks:
+      - sahara-net
+
+  sahara-back:
+    build: ./Sahara-back
+    ports:
+      - "8082:8082"
+    environment:
+      - BACK_DB_URL=${BACK_DB_URL}
+      - BACK_DB_USERNAME=${BACK_DB_USERNAME}
+      - BACK_DB_PASSWORD=${BACK_DB_PASSWORD}
+    networks:
+      - sahara-net
+
+  sahara-cart:
+    build: ./Sahara-cart
+    ports:
+      - "8083:8083"
+    environment:
+      - CART_DB_URL=${CART_DB_URL}
+      - CART_DB_USERNAME=${CART_DB_USERNAME}
+      - CART_DB_PASSWORD=${CART_DB_PASSWORD}
+    networks:
+      - sahara-net
+
+networks:
+  sahara-net:

@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import useFetchBugs from './FetchBugs';
 import UpdateBug from './UpdateBug'; 
+import DeleteBug from './DeleteBug';  
 
 const BugListTable = ({ onDelete }) => {
   const { items: bugs, error, refetch } = useFetchBugs();
   const [bugToUpdate, setBugToUpdate] = useState(null); 
+  const [bugIdToDelete, setBugIdToDelete] = useState(null); 
 
   const handleUpdate = (bug) => {
     setBugToUpdate(bug);  
   };
 
   const handleDelete = async (bugId) => {
-    await onDelete(bugId);
-    refetch(); 
+    setBugIdToDelete(bugId); 
   };
 
   const handleUpdateSuccess = (updatedBug) => {
     refetch();  
     setBugToUpdate(null);  
+  };
+
+  const handleDeleteSuccess = () => {
+    refetch();
+    setBugIdToDelete(null); 
   };
 
   if (error) {
@@ -72,6 +78,14 @@ const BugListTable = ({ onDelete }) => {
           bug={bugToUpdate}
           onCancel={() => setBugToUpdate(null)}
           onUpdateSuccess={handleUpdateSuccess}  
+        />
+      )}
+
+      {bugIdToDelete && ( 
+        <DeleteBug
+          bugIdToDelete={bugIdToDelete}
+          onCancel={() => setBugIdToDelete(null)}  
+          onConfirm={handleDeleteSuccess}  
         />
       )}
     </div>

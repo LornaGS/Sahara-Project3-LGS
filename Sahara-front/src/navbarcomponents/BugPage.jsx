@@ -8,7 +8,7 @@ import '../CSS/Modal.css';
 import useFetchBugs from '../bugcomponents/FetchBugs';
 
 const BugPage = () => {
-    const { items: bugs, error, refetch } = useFetchBugs();
+    const { items: bugs, error, loading, refetch } = useFetchBugs();
     const [bugToUpdate, setBugToUpdate] = useState(null);
     const [showUpdateDialogue, setShowUpdateDialogue] = useState(false);
     const [bugIdToDelete, setBugIdToDelete] = useState(null);
@@ -22,23 +22,22 @@ const BugPage = () => {
         setSortConfig({ key, direction });
     };
 
-
     useEffect(() => {
+        console.log("Fetching bugs...");
         refetch();  
     }, []);  
 
-
+    if (loading) return <div>Loading bugs...</div>; 
     if (error) return <div>Error loading bugs: {error.message}</div>;
 
     return (
         <div>
             <div className="container2"> 
-           
+              
                 <AddBug onAddBug={refetch} /> 
             </div>
             
             <div className="table-wrapper">
-          
                 <BugListTable
                     bugs={bugs}
                     onUpdate={(bug) => {
@@ -51,7 +50,6 @@ const BugPage = () => {
                 />
             </div>
 
-           
             {bugIdToDelete !== null && (
                 <DeleteBug
                     bugIdToDelete={bugIdToDelete}
@@ -63,7 +61,6 @@ const BugPage = () => {
                 />
             )}
 
-      
             {showUpdateDialogue && bugToUpdate && (
                 <UpdateBug
                     bug={bugToUpdate}

@@ -23,7 +23,7 @@ const AddBug = ({ onAddBug }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-  const { items: existingBugs, error } = useFetchBugs(); 
+  const { error } = useFetchBugs(); 
 
   useEffect(() => {
     if (error) {
@@ -38,7 +38,6 @@ const AddBug = ({ onAddBug }) => {
 
     console.log("Form Data to be Submitted:", formData);
 
- 
     if (
       !formData.title ||
       !formData.description ||
@@ -48,17 +47,6 @@ const AddBug = ({ onAddBug }) => {
       !formData.reporter
     ) {
       setAlertMessage("All fields are required.");
-      setIsModalVisible(false);
-      setShowAlert(true);
-      return;
-    }
-
-    const bugExists = existingBugs?.some(
-      (b) => b.title.toLowerCase() === formData.title.toLowerCase()
-    );
-
-    if (bugExists) {
-      setAlertMessage("Bug with this title already exists.");
       setIsModalVisible(false);
       setShowAlert(true);
       return;
@@ -83,7 +71,7 @@ const AddBug = ({ onAddBug }) => {
       setAlertMessage(`New Bug Reported. Your Unique ID is ${data.id}`);
       setShowAlert(true);
 
-  
+      // Reset the form data
       setFormData({
         title: "",
         description: "",
@@ -92,9 +80,12 @@ const AddBug = ({ onAddBug }) => {
         assignee: "",
         reporter: "",
       });
-      
-      onAddBug();  
-      setIsModalOpen(false);  
+
+      // Close the modal after successful submission
+      setIsModalOpen(false);
+
+      console.log("Bug added, calling refetch");
+      onAddBug(); // Refresh the bug list immediately after adding
     } catch (error) {
       console.error("Error reporting bug:", error);
       setAlertMessage("Failed to report bug.");
@@ -105,6 +96,7 @@ const AddBug = ({ onAddBug }) => {
   const closeAlert = () => {
     setShowAlert(false);
     setIsModalVisible(true);
+    // Note: Removed onAddBug() from here to prevent refreshing on alert close
   };
 
   return (

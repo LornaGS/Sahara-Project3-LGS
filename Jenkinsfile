@@ -101,16 +101,14 @@ pipeline {
     
 
 
-       stage('Deploy - Production') {
+              stage('Deploy - Production') {
             steps {
-		echo 'Deploying to production'
-
-               }
-           post {
-              always {
-                jiraSendDeploymentInfo environmentId: 'prod1', environmentName: 'production', environmentType: 'live'
-		}
-              }  
+                echo 'Deploying to production'
+            }
+            post {
+                always {
+                    jiraSendDeploymentInfo site: 'https://lornagordonsmith-1728029945609.atlassian.net', environmentId: 'prod1', environmentName: 'production', environmentType: 'live'
+                }
             }
         }
     }

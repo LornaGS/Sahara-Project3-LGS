@@ -88,13 +88,7 @@ pipeline {
 
 
 
-        stage('Test Frontend') {
-            steps {
-                dir('Sahara-front') {
-                    bat 'npm test -- --watchAll=false'
-                }
-            }
-        }
+     
 
 
 

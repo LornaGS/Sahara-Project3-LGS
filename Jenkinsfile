@@ -94,7 +94,7 @@ pipeline {
             }
         }
 
-        tage('Build Docker Images') {
+        stage('Build Docker Images') {
             steps {
                 sh 'docker-compose -f docker-compose.yml build'
             }

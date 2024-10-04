@@ -89,13 +89,32 @@ pipeline {
 
 
   
-
+ 	stage('Test Frontend') {
+            steps {
+                dir('Sahara-front') {
+                    bat 'npm test'
+                }
+            }
+        }
 
         stage('Run Frontend') {
             steps {
                 dir('Sahara-front') {
                     bat 'start npm start'
                 }
+            }
+        }
+
+       stage('Build docker images') {
+            steps {
+               echo 'Building docker images'
+            }
+        }
+
+       stage('Run services with docker ') {
+            steps {
+               echo 'Running services with docker 
+'
             }
         }
     

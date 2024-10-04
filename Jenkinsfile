@@ -88,8 +88,7 @@ pipeline {
 
 
 
-     
-
+  
 
 
         stage('Run Frontend') {
@@ -97,6 +96,15 @@ pipeline {
                 dir('Sahara-front') {
                     bat 'start npm start'
                 }
+            }
+        }
+    
+
+
+       stage('Deploy') {
+            steps {
+                jiraSendDeploymentInfo site: 'https://lornagordonsmith-1728029945609.atlassian.net/'
+                
             }
         }
     }

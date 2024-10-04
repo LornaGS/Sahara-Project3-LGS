@@ -113,6 +113,15 @@ pipeline {
                 bat 'docker-compose -f docker-compose.yml up -d'
             }
         }
+
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying to Production...'
+                // Add your deployment steps here, for example:
+                bat 'scp target/your-app.jar user@production-server:/path/to/deploy'
+                bat 'ssh user@production-server "cd /path/to/deploy && ./restart.sh"'
+            }
+        }
     }
 
     post {

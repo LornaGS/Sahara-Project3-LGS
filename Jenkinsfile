@@ -96,13 +96,13 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                sh 'docker-compose -f docker-compose.yml build'
+                bat 'docker-compose -f docker-compose.yml build'
             }
         }
 
         stage('Run Services with Docker') {
             steps {
-                sh 'docker-compose -f docker-compose.yml up -d'
+                bat 'docker-compose -f docker-compose.yml up -d'
             }
         }
     }

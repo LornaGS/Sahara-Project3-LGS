@@ -55,7 +55,7 @@ pipeline {
             }
         }
 
- stage('Test Backend - Sahara-cart') {
+        stage('Test Backend - Sahara-cart') {
             steps {
                 dir('Sahara-cart') {
                     bat 'mvn test'
@@ -86,6 +86,14 @@ pipeline {
             }
         }
 
+        stage('Test Frontend') {
+            steps {
+                dir('Sahara-front') {
+                    echo 'Testing Front end'
+                }
+            }
+        }
+
         stage('Run Frontend') {
             steps {
                 dir('Sahara-front') {
@@ -93,17 +101,40 @@ pipeline {
                 }
             }
         }
+
+        stage('Build docker images') {
+            steps {
+                echo 'Building docker images'
+            }
+        }
+
+        stage('Run services with docker') {
+            steps {
+                echo 'Running services with docker'
+            }
+        }
+
+        stage('Deploy - Production') {
+            steps {
+                echo 'Deploying to production'
+            }
+            post {
+                always {
+                    jiraSendDeploymentInfo site: 'https://lornagordonsmith-1728029945609.atlassian.net', environmentId: 'prod1', environmentName: 'production', environmentType: 'live'
+                }
+            }
+        }
     }
 
     post {
         always {
-            echo 'Pipeline execution complete'
+            echo 'Pipeline execution complete successfully'
         }
         success {
-            echo 'Build and deployment successful!'
+            echo 'Pipeline succeeded'
         }
         failure {
-            echo 'Build or deployment failed.'
+            echo 'Pipeline failed'
         }
     }
 }
